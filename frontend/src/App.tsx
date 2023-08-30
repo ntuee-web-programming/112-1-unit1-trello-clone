@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import HeaderBar from "./components/HeaderBar";
-import CardList, { CardListProps } from "./components/List";
+import CardList, { type CardListProps } from "./components/List";
 
 const mockLists = [
   {
