@@ -1,7 +1,14 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { Add as AddIcon } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 
 import HeaderBar from "./components/HeaderBar";
 import CardList, { CardListProps } from "./components/List";
@@ -53,6 +60,8 @@ function App() {
     return Object.values(listMap);
   }, []);
 
+  const [newListDialogOpen, setNewListDialogOpen] = useState(false);
+
   return (
     <>
       <HeaderBar />
@@ -61,11 +70,28 @@ function App() {
           <CardList key={list.id} {...list} />
         ))}
         <div>
-          <Button variant="contained" className="w-80">
+          <Button
+            variant="contained"
+            className="w-80"
+            onClick={() => setNewListDialogOpen(true)}
+          >
             <AddIcon className="mr-2" />
             Add a list
           </Button>
         </div>
+        <Dialog
+          open={newListDialogOpen}
+          onClose={() => setNewListDialogOpen(false)}
+        >
+          <DialogTitle>Add a list</DialogTitle>
+          <DialogContent>
+            <TextField label="List Name" variant="outlined" sx={{ mt: 2 }} />
+          </DialogContent>
+          <DialogActions>
+            <Button>add</Button>
+            <Button onClick={() => setNewListDialogOpen(false)}>cancel</Button>
+          </DialogActions>
+        </Dialog>
       </main>
     </>
   );

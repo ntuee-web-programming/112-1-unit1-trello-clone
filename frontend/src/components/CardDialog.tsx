@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   Input,
@@ -90,32 +89,30 @@ export default function CardDialog(props: CardDialogProps) {
         )}
       </DialogTitle>
       <DialogContent className="w-[600px]">
-        <DialogContentText>
-          {edittingDescription ? (
-            <ClickAwayListener
-              onClickAway={() => {
-                if (variant === "edit") {
-                  setEdittingDescription(false);
-                }
-              }}
-            >
-              <textarea
-                className="bg-white/0 p-2"
-                autoFocus
-                defaultValue={description}
-                placeholder="Add a more detailed description..."
-                onChange={(e) => setNewDescription(e.target.value)}
-              />
-            </ClickAwayListener>
-          ) : (
-            <button
-              onClick={() => setEdittingDescription(true)}
-              className="w-full hover:bg-white/10 p-2 rounded-md"
-            >
-              <Typography className="text-start">{newDescription}</Typography>
-            </button>
-          )}
-        </DialogContentText>
+        {edittingDescription ? (
+          <ClickAwayListener
+            onClickAway={() => {
+              if (variant === "edit") {
+                setEdittingDescription(false);
+              }
+            }}
+          >
+            <textarea
+              className="bg-white/0 p-2"
+              autoFocus
+              defaultValue={description}
+              placeholder="Add a more detailed description..."
+              onChange={(e) => setNewDescription(e.target.value)}
+            />
+          </ClickAwayListener>
+        ) : (
+          <button
+            onClick={() => setEdittingDescription(true)}
+            className="w-full hover:bg-white/10 p-2 rounded-md"
+          >
+            <Typography className="text-start">{newDescription}</Typography>
+          </button>
+        )}
         <DialogActions>
           <Button onClick={handleSave}>save</Button>
           <Button onClick={handleClose}>close</Button>
