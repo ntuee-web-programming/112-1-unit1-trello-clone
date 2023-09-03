@@ -183,3 +183,56 @@ no body
 ```text
 OK
 ```
+
+# Backend Setup
+## 1. Create a `backend` folder
+```bash
+mkdir backend
+```
+## 2. Create a `package.json` file
+```bash
+cd backend
+yarn init -y
+```
+## 3. Install dependencies
+```bash
+yarn add express cors mongoose dotenv body-parser
+```
+## 4. Typescript setup
+```bash
+yarn add -D ts-node typescript @types/cors @types/node @types/express
+```
+`-D` flag means that the package is a dev dependency. It is only used during development and not in production.
+
+Then we create a `tsconfig.json` file
+```bash
+yarn tsc --init
+```
+
+We want to use the types defined in the `lib` folder. Therefore, we have to add the following line to `tsconfig.json`
+```json
+{
+  "compilerOptions": {
+    ...
+    "@lib/*": ["../lib/*"],
+    ...
+  }
+}
+```
+
+## 5. Create an entry point
+```bash
+mkdir src
+touch src/index.ts
+```
+## 6. Add scripts to `package.json`
+```json
+"scripts": {
+  "dev": "nodemon src/index.ts",
+  "start": "ts-node src/index.ts",
+  "lint": "eslint src",
+  "format": "prettier --write src"
+}
+```
+
+
