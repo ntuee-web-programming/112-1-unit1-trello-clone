@@ -32,7 +32,7 @@ module.exports = {
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "@typescript-eslint/consistent-type-imports": [
       "warn",
-      { prefer: "type-imports", fixStyle: "inline-type-imports" },
+      { prefer: "type-imports", fixStyle: "separate-type-imports" },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
