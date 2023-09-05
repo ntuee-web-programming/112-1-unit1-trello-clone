@@ -26,7 +26,7 @@ export default function NewListDialog({ open, onClose }: NewListDialogProps) {
       await createList({ name: textfieldRef.current?.value ?? "" });
       fetchLists();
     } catch (error) {
-      alert("Failed to create list");
+      alert("Error: Failed to create list");
     } finally {
       onClose();
     }

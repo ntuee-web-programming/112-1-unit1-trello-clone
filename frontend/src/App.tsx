@@ -4,8 +4,8 @@ import { Add as AddIcon } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 import NewListDialog from "./components/NewListDialog";
+import CardList from "@/components/CardList";
 import HeaderBar from "@/components/HeaderBar";
-import CardList from "@/components/List";
 import useCards from "@/hooks/useCards";
 
 function App() {

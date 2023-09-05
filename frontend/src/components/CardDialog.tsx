@@ -66,6 +66,9 @@ export default function CardDialog(props: CardDialogProps) {
           list_id: listId,
         });
       } else {
+        if (newTitle === title && newDescription === description) {
+          return;
+        }
         await updateCard(props.cardId, {
           title: newTitle,
           description: newDescription,
@@ -73,7 +76,7 @@ export default function CardDialog(props: CardDialogProps) {
       }
       fetchCards();
     } catch (error) {
-      alert("Failed to save card");
+      alert("Error: Failed to save card");
     } finally {
       handleClose();
     }
@@ -87,7 +90,7 @@ export default function CardDialog(props: CardDialogProps) {
       await deleteCard(props.cardId);
       fetchCards();
     } catch (error) {
-      alert("Failed to delete card");
+      alert("Error: Failed to delete card");
     } finally {
       handleClose();
     }

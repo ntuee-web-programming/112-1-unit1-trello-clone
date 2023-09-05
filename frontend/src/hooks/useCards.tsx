@@ -6,13 +6,13 @@ import {
   useState,
 } from "react";
 
-import type { CardData, ListData } from "@lib/shared_types";
+import type { GetCardsResponse, GetListsResponse } from "@lib/shared_types";
 
-import type { CardListProps } from "@/components/List";
+import type * as List from "@/components/CardList";
 import { getCards, getLists } from "@/utils/client";
 
 type CardContextType = {
-  lists: CardListProps[];
+  lists: List.CardListProps[];
   fetchLists: () => Promise<void>;
   fetchCards: () => Promise<void>;
 };
@@ -28,8 +28,8 @@ type CardProviderProps = {
 };
 
 export function CardProvider({ children }: CardProviderProps) {
-  const [rawLists, setRawLists] = useState<ListData[]>([]);
-  const [rawCards, setRawCards] = useState<CardData[]>([]);
+  const [rawLists, setRawLists] = useState<GetListsResponse>([]);
+  const [rawCards, setRawCards] = useState<GetCardsResponse>([]);
 
   const fetchLists = useCallback(async () => {
     try {
@@ -55,10 +55,13 @@ export function CardProvider({ children }: CardProviderProps) {
         acc[list.id] = { ...list, cards: [] };
         return acc;
       },
-      {} as Record<string, CardListProps>,
+      {} as Record<string, List.CardListProps>,
     );
     for (const card of rawCards) {
-      listMap[card.list_id].cards.push(card);
+      listMap[card.list_id].cards.push({
+        ...card,
+        listId: card.list_id,
+      });
     }
     return Object.values(listMap);
   }, [rawCards, rawLists]);

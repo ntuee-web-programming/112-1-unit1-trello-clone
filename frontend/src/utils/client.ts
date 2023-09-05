@@ -10,6 +10,9 @@ import type {
   UpdateCardPayload,
   UpdateCardResponse,
   DeleteCardResponse,
+  DeleteListResponse,
+  UpdateListPayload,
+  UpdateListResponse,
 } from "@lib/shared_types";
 
 import { env } from "./env";
@@ -38,6 +41,14 @@ export function updateCard(id: string, input: UpdateCardPayload) {
   return client.put<UpdateCardResponse>(`/cards/${id}`, input);
 }
 
+export function updateList(id: string, input: UpdateListPayload) {
+  return client.put<UpdateListResponse>(`/lists/${id}`, input);
+}
+
 export function deleteCard(id: string) {
   return client.delete<DeleteCardResponse>(`/cards/${id}`);
+}
+
+export function deleteList(id: string) {
+  return client.delete<DeleteListResponse>(`/lists/${id}`);
 }
