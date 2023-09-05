@@ -8,11 +8,11 @@ import {
 
 import type { GetCardsResponse, GetListsResponse } from "@lib/shared_types";
 
-import type * as List from "@/components/CardList";
+import type { CardListProps } from "@/components/CardList";
 import { getCards, getLists } from "@/utils/client";
 
 type CardContextType = {
-  lists: List.CardListProps[];
+  lists: CardListProps[];
   fetchLists: () => Promise<void>;
   fetchCards: () => Promise<void>;
 };
@@ -52,13 +52,15 @@ export function CardProvider({ children }: CardProviderProps) {
   }, []);
 
   const lists = useMemo(() => {
+    // you can do functional-ish programming in JS too
     const listMap = rawLists.reduce(
       (acc, list) => {
         acc[list.id] = { ...list, cards: [] };
         return acc;
       },
-      {} as Record<string, List.CardListProps>,
+      {} as Record<string, CardListProps>,
     );
+    // or you can do for loops
     for (const card of rawCards) {
       listMap[card.list_id].cards.push({
         ...card,

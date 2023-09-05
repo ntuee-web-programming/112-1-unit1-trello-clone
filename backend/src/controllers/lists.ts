@@ -60,7 +60,6 @@ export const createList = async (
   req: Request<never, never, CreateListPayload>,
   res: Response<CreateListResponse>,
 ) => {
-  console.log("create list", req.body);
   try {
     const { id } = await ListModel.create(req.body);
     return res.status(201).json({ id });

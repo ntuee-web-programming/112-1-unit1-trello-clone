@@ -111,6 +111,7 @@ export const updateCard = async (
         return res.status(404).json({ error: "list_id is not valid" });
       }
     }
+
     const newCard = await CardModel.findByIdAndUpdate(
       id,
       {
