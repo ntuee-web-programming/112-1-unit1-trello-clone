@@ -1,8 +1,6 @@
 import CardModel from "../models/card";
 import ListModel from "../models/list";
 import { genericErrorHandler } from "../utils/errors";
-import type { Request, Response } from "express";
-
 import type {
   CardData,
   CreateListPayload,
@@ -11,6 +9,7 @@ import type {
   ListData,
   UpdateListPayload,
 } from "@lib/shared_types";
+import type { Request, Response } from "express";
 
 // Get all lists
 export const getLists = async (_: Request, res: Response<GetListsResponse>) => {

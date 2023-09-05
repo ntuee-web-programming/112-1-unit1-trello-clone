@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import type {
   CreateCardPayload,
   CreateCardResponse,
@@ -14,6 +12,7 @@ import type {
   UpdateListPayload,
   UpdateListResponse,
 } from "@lib/shared_types";
+import axios from "axios";
 
 import { env } from "./env";
 

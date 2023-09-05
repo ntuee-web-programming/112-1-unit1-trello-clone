@@ -21,7 +21,7 @@ export default function Card({ id, title, description, listId }: CardProps) {
   return (
     <>
       <button onClick={handleClickOpen} className="text-start">
-        <Paper className="w-full p-2 flex flex-col" elevation={6}>
+        <Paper className="flex w-full flex-col p-2" elevation={6}>
           {title}
         </Paper>
       </button>

@@ -3,8 +3,6 @@
 import CardModel from "../models/card";
 import ListModel from "../models/list";
 import { genericErrorHandler } from "../utils/errors";
-import type { Request, Response } from "express";
-
 import type {
   CreateCardPayload,
   CreateCardResponse,
@@ -13,6 +11,7 @@ import type {
   UpdateCardPayload,
   UpdateCardResponse,
 } from "@lib/shared_types";
+import type { Request, Response } from "express";
 
 // Get all cards
 export const getCards = async (_: Request, res: Response<GetCardsResponse>) => {

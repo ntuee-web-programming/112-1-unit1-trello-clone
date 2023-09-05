@@ -1,17 +1,15 @@
 import { useState } from "react";
 
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import {
-  Button,
-  ClickAwayListener,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Input,
-  Typography,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import Typography from "@mui/material/Typography";
 
 import useCards from "@/hooks/useCards";
 import { createCard, deleteCard, updateCard } from "@/utils/client";
@@ -118,7 +116,7 @@ export default function CardDialog(props: CardDialogProps) {
         ) : (
           <button
             onClick={() => setEdittingTitle(true)}
-            className="w-full hover:bg-white/10 p-2 rounded-md"
+            className="w-full rounded-md p-2 hover:bg-white/10"
           >
             <Typography className="text-start">{newTitle}</Typography>
           </button>
@@ -149,7 +147,7 @@ export default function CardDialog(props: CardDialogProps) {
         ) : (
           <button
             onClick={() => setEdittingDescription(true)}
-            className="w-full hover:bg-white/10 p-2 rounded-md"
+            className="w-full rounded-md p-2 hover:bg-white/10"
           >
             <Typography className="text-start">{newDescription}</Typography>
           </button>

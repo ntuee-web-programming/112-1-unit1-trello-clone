@@ -1,21 +1,21 @@
 import { useRef, useState } from "react";
 
-import { Delete as DeleteIcon } from "@mui/icons-material";
-import { Add as AddIcon } from "@mui/icons-material";
-import {
-  Button,
-  ClickAwayListener,
-  Divider,
-  IconButton,
-  Input,
-  Paper,
-  Typography,
-} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
-import Card, { type CardProps } from "./Card";
-import CardDialog from "./CardDialog";
 import useCards from "@/hooks/useCards";
 import { deleteList, updateList } from "@/utils/client";
+
+import Card from "./Card";
+import type { CardProps } from "./Card";
+import CardDialog from "./CardDialog";
 
 export type CardListProps = {
   id: string;
@@ -71,7 +71,7 @@ export default function CardList({ id, name, cards }: CardListProps) {
           ) : (
             <button
               onClick={() => setEdittingName(true)}
-              className="w-full hover:bg-white/10 p-2 rounded-md"
+              className="w-full rounded-md p-2 hover:bg-white/10"
             >
               <Typography className="text-start" variant="h4">
                 {name}

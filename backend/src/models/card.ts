@@ -1,7 +1,6 @@
+import type { CardData } from "@lib/shared_types";
 import mongoose from "mongoose";
 import type { Types } from "mongoose";
-
-import type { CardData } from "@lib/shared_types";
 
 // In `CardData`, we have `list_id` and `id` as a string, but in the database, we want to store them as an ObjectId.
 interface CardDocument
