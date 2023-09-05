@@ -7,13 +7,24 @@ import type { Request, Response } from "express";
 
 import type {
   CreateCardPayload,
+  CreateCardResponse,
+  GetCardResponse,
+  GetCardsResponse,
   UpdateCardPayload,
+  UpdateCardResponse,
 } from "@lib/shared_types";
 
 // Get all cards
-export const getCards = async (_: Request, res: Response) => {
+export const getCards = async (_: Request, res: Response<GetCardsResponse>) => {
   try {
-    const cards = await CardModel.find({});
+    const dbCards = await CardModel.find({});
+    const cards = dbCards.map((card) => ({
+      id: card.id as string,
+      title: card.title,
+      description: card.description,
+      list_id: card.list_id.toString(),
+    }));
+
     return res.status(200).json(cards);
   } catch (error) {
     // Check the type of error
@@ -22,7 +33,10 @@ export const getCards = async (_: Request, res: Response) => {
 };
 
 // Get a card
-export const getCard = async (req: Request<{ id: string }>, res: Response) => {
+export const getCard = async (
+  req: Request<{ id: string }>,
+  res: Response<GetCardResponse | { error: string }>,
+) => {
   try {
     const { id } = req.params;
 
@@ -31,7 +45,12 @@ export const getCard = async (req: Request<{ id: string }>, res: Response) => {
       return res.status(404).json({ error: "id is not valid" });
     }
 
-    return res.status(200).json(card);
+    return res.status(200).json({
+      id: card.id as string,
+      title: card.title,
+      description: card.description,
+      list_id: card.list_id.toString(),
+    });
   } catch (error) {
     genericErrorHandler(error, res);
   }
@@ -40,7 +59,7 @@ export const getCard = async (req: Request<{ id: string }>, res: Response) => {
 // Create a card
 export const createCard = async (
   req: Request<never, never, CreateCardPayload>,
-  res: Response,
+  res: Response<CreateCardResponse | { error: string }>,
 ) => {
   try {
     const { title, description, list_id } = req.body;
@@ -61,7 +80,9 @@ export const createCard = async (
     list.cards.push(card._id);
     await list.save();
 
-    return res.status(201).json({ card });
+    return res.status(201).json({
+      id: card.id as string,
+    });
   } catch (error) {
     // Check the type of error
     genericErrorHandler(error, res);
@@ -71,7 +92,7 @@ export const createCard = async (
 // Update a card
 export const updateCard = async (
   req: Request<{ id: string }, never, UpdateCardPayload>,
-  res: Response,
+  res: Response<UpdateCardResponse | { error: string }>,
 ) => {
   try {
     const { id } = req.params;
@@ -126,7 +147,7 @@ export const updateCard = async (
       await newList.save();
     }
 
-    return res.status(200).json(newCard);
+    return res.status(200).send("OK");
   } catch (error) {
     // Check the type of error
     genericErrorHandler(error, res);

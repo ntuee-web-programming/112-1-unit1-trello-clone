@@ -13,6 +13,8 @@ export type ListData = {
 
 export type GetCardsResponse = CardData[];
 
+export type GetCardResponse = CardData;
+
 export type CreateCardPayload = Omit<CardData, "id">;
 
 export type CreateCardResponse = Pick<CardData, "id">;
