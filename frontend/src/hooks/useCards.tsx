@@ -27,6 +27,8 @@ type CardProviderProps = {
   children: React.ReactNode;
 };
 
+// all data fetching and processing is done here, the rest of the app just consumes the data exposed by this provider
+// when we run fetchLists or fetchCards, we update the state of the provider, which causes the rest of the app to re-render accordingly
 export function CardProvider({ children }: CardProviderProps) {
   const [rawLists, setRawLists] = useState<GetListsResponse>([]);
   const [rawCards, setRawCards] = useState<GetCardsResponse>([]);
