@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import CardRoutes from "./routes/cards";
 import ListRoutes from "./routes/lists";
 // We use a custom env.ts file to make sure that all the environment variables are in correct types.
-import { Env } from "./utils/env";
+import { env } from "./utils/env";
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,10 +22,10 @@ app.get("/heartbeat", (_, res) => {
 
 // Connect to MongoDB
 mongoose
-  .connect(Env.MONGO_URI)
+  .connect(env.MONGO_URI)
   .then(() => {
-    app.listen(Env.PORT, () =>
-      console.log(`Server running on port http://localhost:${Env.PORT}`),
+    app.listen(env.PORT, () =>
+      console.log(`Server running on port http://localhost:${env.PORT}`),
     );
     // If the connection is successful, we will see this message in the console.
     console.log("Connected to MongoDB");

@@ -1,12 +1,18 @@
 import CardModel from "../models/card";
 import ListModel from "../models/list";
 import { genericErrorHandler } from "../utils/errors";
+import type {
+  CardData,
+  CreateListPayload,
+  CreateListResponse,
+  GetListsResponse,
+  ListData,
+  UpdateListPayload,
+} from "@lib/shared_types";
 import type { Request, Response } from "express";
 
-import type { CreateListInput, UpdateListInput } from "@lib/shared_types";
-
 // Get all lists
-export const getLists = async (_: Request, res: Response) => {
+export const getLists = async (_: Request, res: Response<GetListsResponse>) => {
   try {
     const lists = await ListModel.find({});
 
@@ -25,14 +31,25 @@ export const getLists = async (_: Request, res: Response) => {
 };
 
 // Get a list
-export const getList = async (req: Request<{ id: string }>, res: Response) => {
+export const getList = async (
+  req: Request<{ id: string }>,
+  res: Response<ListData | { error: string }>,
+) => {
   try {
     const { id } = req.params;
     const lists = await ListModel.findById(id).populate("cards");
     if (!lists) {
       return res.status(404).json({ error: "id is not valid" });
     }
-    return res.status(200).json(lists);
+
+    lists.populate("cards");
+
+    return res.status(200).json({
+      id: lists.id,
+      name: lists.name,
+      // FIX: check this
+      cards: lists.cards as unknown as CardData[],
+    });
   } catch (error) {
     genericErrorHandler(error, res);
   }
@@ -40,12 +57,13 @@ export const getList = async (req: Request<{ id: string }>, res: Response) => {
 
 // Create a list
 export const createList = async (
-  req: Request<never, never, CreateListInput>,
-  res: Response,
+  req: Request<never, never, CreateListPayload>,
+  res: Response<CreateListResponse>,
 ) => {
+  console.log("create list", req.body);
   try {
-    const list = await ListModel.create(req.body);
-    return res.status(201).json(list);
+    const { id } = await ListModel.create(req.body);
+    return res.status(201).json({ id });
   } catch (error) {
     genericErrorHandler(error, res);
   }
@@ -53,7 +71,7 @@ export const createList = async (
 
 // Update a list
 export const updateList = async (
-  req: Request<{ id: string }, never, UpdateListInput>,
+  req: Request<{ id: string }, never, UpdateListPayload>,
   res: Response,
 ) => {
   try {

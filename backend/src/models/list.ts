@@ -1,7 +1,6 @@
+import type { ListData } from "@lib/shared_types";
 import mongoose from "mongoose";
 import type { Types } from "mongoose";
-
-import type { ListData } from "@lib/shared_types";
 
 // In `ListData`, we have `id` as a string and `cards` as an array of `CardData`, but in the database, we want them both to be stored as an ObjectId.
 interface ListDocument
@@ -28,13 +27,6 @@ const ListSchema = new mongoose.Schema<ListDocument>(
   },
   {
     timestamps: true,
-    toJSON: {
-      transform: (_, ret): void => {
-        ret.id = ret._id.toString();
-        delete ret._id;
-        delete ret.__v;
-      },
-    },
   },
 );
 
