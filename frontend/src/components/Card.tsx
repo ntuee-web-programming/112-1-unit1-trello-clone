@@ -8,18 +8,14 @@ export type CardProps = {
   id: string;
   title: string;
   description: string;
+  listId: string;
 };
 
-export default function Card({ title, description }: CardProps) {
-  const [open, setOpen] = useState(true);
+export default function Card({ id, title, description, listId }: CardProps) {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
-
-  const handleSave = (newTitle: string, newDescription: string) => {
-    console.log(newTitle);
-    console.log(newDescription);
   };
 
   return (
@@ -33,9 +29,10 @@ export default function Card({ title, description }: CardProps) {
         variant="edit"
         open={open}
         onClose={() => setOpen(false)}
-        onSave={handleSave}
         title={title}
         description={description}
+        listId={listId}
+        cardId={id}
       />
     </>
   );

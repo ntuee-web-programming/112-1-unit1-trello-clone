@@ -4,9 +4,11 @@ import CardModel from "../models/card";
 import ListModel from "../models/list";
 import { genericErrorHandler } from "../utils/errors";
 import type { Request, Response } from "express";
-import { MongooseError } from "mongoose";
 
-import { CreateCardInput, UpdateCardInput } from "@lib/shared_types";
+import type {
+  CreateCardPayload,
+  UpdateCardPayload,
+} from "@lib/shared_types";
 
 // Get all cards
 export const getCards = async (_: Request, res: Response) => {
@@ -37,7 +39,7 @@ export const getCard = async (req: Request<{ id: string }>, res: Response) => {
 
 // Create a card
 export const createCard = async (
-  req: Request<never, never, CreateCardInput>,
+  req: Request<never, never, CreateCardPayload>,
   res: Response,
 ) => {
   try {
@@ -68,7 +70,7 @@ export const createCard = async (
 
 // Update a card
 export const updateCard = async (
-  req: Request<{ id: string }, never, UpdateCardInput>,
+  req: Request<{ id: string }, never, UpdateCardPayload>,
   res: Response,
 ) => {
   try {

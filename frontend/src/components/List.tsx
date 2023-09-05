@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Add as AddIcon } from "@mui/icons-material";
 import { Button, Divider, Paper, Typography } from "@mui/material";
 
-import Card, { CardProps } from "./Card";
+import Card, { type CardProps } from "./Card";
 import CardDialog from "./CardDialog";
 
 export type CardListProps = {
@@ -12,7 +12,7 @@ export type CardListProps = {
   cards: CardProps[];
 };
 
-export default function CardList({ name, cards }: CardListProps) {
+export default function CardList({ id, name, cards }: CardListProps) {
   const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
 
   return (
@@ -37,10 +37,7 @@ export default function CardList({ name, cards }: CardListProps) {
         variant="new"
         open={openNewCardDialog}
         onClose={() => setOpenNewCardDialog(false)}
-        onSave={(title, description) => {
-          console.log(title);
-          console.log(description);
-        }}
+        listId={id}
       />
     </>
   );

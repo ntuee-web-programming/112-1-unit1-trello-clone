@@ -13,26 +13,30 @@ import {
   Typography,
 } from "@mui/material";
 
+import useCards from "@/hooks/useCards";
+import { createCard, deleteCard, updateCard } from "@/utils/client";
+
 type NewCardDialogProps = {
   variant: "new";
   open: boolean;
   onClose: () => void;
-  onSave: (title: string, description: string) => void;
+  listId: string;
 };
 
 type EditCardDialogProps = {
   variant: "edit";
   open: boolean;
   onClose: () => void;
+  listId: string;
+  cardId: string;
   title: string;
   description: string;
-  onSave: (title: string, description: string) => void;
 };
 
 type CardDialogProps = NewCardDialogProps | EditCardDialogProps;
 
 export default function CardDialog(props: CardDialogProps) {
-  const { variant, open, onClose, onSave } = props;
+  const { variant, open, onClose, listId } = props;
   const title = variant === "edit" ? props.title : "";
   const description = variant === "edit" ? props.description : "";
 
@@ -43,6 +47,8 @@ export default function CardDialog(props: CardDialogProps) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
 
+  const { fetchCards } = useCards();
+
   const handleClose = () => {
     onClose();
     if (variant === "edit") {
@@ -51,8 +57,40 @@ export default function CardDialog(props: CardDialogProps) {
     }
   };
 
-  const handleSave = () => {
-    onSave(newTitle, newDescription);
+  const handleSave = async () => {
+    try {
+      if (variant === "new") {
+        await createCard({
+          title: newTitle,
+          description: newDescription,
+          list_id: listId,
+        });
+      } else {
+        await updateCard(props.cardId, {
+          title: newTitle,
+          description: newDescription,
+        });
+      }
+      fetchCards();
+    } catch (error) {
+      alert("Failed to save card");
+    } finally {
+      handleClose();
+    }
+  };
+
+  const handleDelete = async () => {
+    if (variant !== "edit") {
+      return;
+    }
+    try {
+      await deleteCard(props.cardId);
+      fetchCards();
+    } catch (error) {
+      alert("Failed to delete card");
+    } finally {
+      handleClose();
+    }
   };
 
   return (
@@ -83,7 +121,7 @@ export default function CardDialog(props: CardDialogProps) {
           </button>
         )}
         {variant === "edit" && (
-          <IconButton color="error">
+          <IconButton color="error" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         )}

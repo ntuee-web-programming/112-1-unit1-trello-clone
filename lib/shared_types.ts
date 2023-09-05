@@ -11,22 +11,26 @@ export type ListData = {
   cards: CardData[];
 };
 
-export type CreateCardInput = Omit<CardData, "id">;
+export type GetCardsResponse = CardData[];
 
-export type CreateCardOutput = Pick<CardData, "id">;
+export type CreateCardPayload = Omit<CardData, "id">;
 
-export type UpdateCardInput = Partial<Omit<CardData, "id">>;
+export type CreateCardResponse = Pick<CardData, "id">;
 
-export type UpdateCardOutput = "OK";
+export type UpdateCardPayload = Partial<Omit<CardData, "id">>;
 
-export type DeleteCardOutput = "OK";
+export type UpdateCardResponse = "OK";
 
-export type CreateListInput = Omit<ListData, "id" | "cards">;
+export type DeleteCardResponse = "OK";
 
-export type CreateListOutput = Pick<ListData, "id">;
+export type GetListsResponse = Omit<ListData, "cards">[];
 
-export type UpdateListInput = Partial<Omit<ListData, "id" | "cards">>;
+export type CreateListPayload = Omit<ListData, "id" | "cards">;
 
-export type UpdateListOutput = "OK";
+export type CreateListResponse = Pick<ListData, "id">;
 
-export type DeleteListOutput = "OK";
+export type UpdateListPayload = Partial<Omit<ListData, "id" | "cards">>;
+
+export type UpdateListResponse = "OK";
+
+export type DeleteListResponse = "OK";

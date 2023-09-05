@@ -28,13 +28,6 @@ const ListSchema = new mongoose.Schema<ListDocument>(
   },
   {
     timestamps: true,
-    toJSON: {
-      transform: (_, ret): void => {
-        ret.id = ret._id.toString();
-        delete ret._id;
-        delete ret.__v;
-      },
-    },
   },
 );
 
