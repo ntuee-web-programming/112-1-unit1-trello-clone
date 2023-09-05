@@ -16,6 +16,8 @@ type NewListDialogProps = {
 };
 
 export default function NewListDialog({ open, onClose }: NewListDialogProps) {
+  // using a ref to get the dom element is one way to get the value of a input
+  // another way is to use a state variable and update it on change, which can be found in CardDialog.tsx
   const textfieldRef = useRef<HTMLInputElement>(null);
   const { fetchLists } = useCards();
 

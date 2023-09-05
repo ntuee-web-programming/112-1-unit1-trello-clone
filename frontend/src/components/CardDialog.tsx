@@ -44,6 +44,10 @@ export default function CardDialog(props: CardDialogProps) {
   const [edittingDescription, setEdittingDescription] = useState(
     variant === "new",
   );
+
+  // using a state variable to store the value of the input, and update it on change is another way to get the value of a input
+  // however, this method is not recommended for large forms, as it will cause a re-render on every change
+  // you can read more about it here: https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [newListId, setNewListId] = useState(listId);
