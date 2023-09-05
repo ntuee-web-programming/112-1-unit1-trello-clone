@@ -42,12 +42,9 @@ export const getList = async (
       return res.status(404).json({ error: "id is not valid" });
     }
 
-    lists.populate("cards");
-
     return res.status(200).json({
       id: lists.id,
       name: lists.name,
-      // FIX: check this
       cards: lists.cards as unknown as CardData[],
     });
   } catch (error) {
@@ -102,6 +99,10 @@ export const deleteList = async (
   req: Request<{ id: string }>,
   res: Response,
 ) => {
+  // Create a transaction
+  const session = await ListModel.startSession();
+  session.startTransaction();
+
   try {
     const { id } = req.params;
 
@@ -118,8 +119,13 @@ export const deleteList = async (
       await CardModel.findByIdAndDelete(cardId);
     });
 
+    // Commit the transaction
+    await session.commitTransaction();
+
     return res.status(200).send("OK");
   } catch (error) {
+    // Rollback the transaction
+    await session.abortTransaction();
     genericErrorHandler(error, res);
   }
 };

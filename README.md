@@ -184,6 +184,19 @@ no body
 OK
 ```
 
+# Frontend Setup
+
+### 1. Add `.env` file
+```bash
+touch .env
+```
+Fill in the following variables in `.env` file
+```bash
+VITE_API_URL="http://localhost:8000/api"
+```
+Please note that the value of `VITE_API_URL` should be the same as the url of the backend server. Also, since `.env` file contains sensitive information, make sure to add `.env` to `.gitignore` file so that it won't be pushed to GitHub.
+
+
 # Backend Setup
 
 ## 1. Create a `backend` folder
