@@ -347,7 +347,7 @@ touch src/index.ts
 "scripts": {
   "dev": "nodemon src/index.ts",
   "start": "ts-node src/index.ts",
-  "lint": "eslint src",
-  "format": "prettier --write src"
+  "lint": "eslint .",
+  "format": "prettier --write ."
 }
 ```
