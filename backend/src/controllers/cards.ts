@@ -93,6 +93,15 @@ export const updateCard = async (
   req: Request<{ id: string }, never, UpdateCardPayload>,
   res: Response<UpdateCardResponse | { error: string }>,
 ) => {
+  // Create mongoose transaction
+  const session = await CardModel.startSession();
+  session.startTransaction();
+  // In `updateCard` function, 2 database operations are performed:
+  // 1. Update the card
+  // 2. Update the list
+  // If one of them fails, we need to rollback the other one.
+  // To do that, we need to use mongoose transaction.
+
   try {
     const { id } = req.params;
     const { title, description, list_id } = req.body;
@@ -147,9 +156,15 @@ export const updateCard = async (
       await newList.save();
     }
 
+    // Commit the transaction
+    // This means that all database operations are successful
+    await session.commitTransaction();
+
     return res.status(200).send("OK");
   } catch (error) {
-    // Check the type of error
+    // Rollback the transaction
+    // This means that one of the database operations is failed
+    await session.abortTransaction();
     genericErrorHandler(error, res);
   }
 };
@@ -159,6 +174,10 @@ export const deleteCard = async (
   req: Request<{ id: string }>,
   res: Response,
 ) => {
+  // Create mongoose transaction
+  const session = await CardModel.startSession();
+  session.startTransaction();
+
   try {
     const { id } = req.params;
 
@@ -176,8 +195,12 @@ export const deleteCard = async (
     list.cards = list.cards.filter((cardId) => cardId.toString() !== id);
     await list.save();
 
+    // Commit the transaction
+    session.commitTransaction();
+
     return res.status(200).send("OK");
   } catch (error) {
+    session.abortTransaction();
     genericErrorHandler(error, res);
   }
 };
