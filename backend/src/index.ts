@@ -22,7 +22,7 @@ app.get("/heartbeat", (_, res) => {
 
 // Connect to MongoDB
 mongoose
-  .connect(env.MONGO_URI)
+  .connect(env.MONGO_URL)
   .then(() => {
     app.listen(env.PORT, () =>
       console.log(`Server running on port http://localhost:${env.PORT}`),
