@@ -17,6 +17,7 @@ type CardContextType = {
   fetchCards: () => Promise<void>;
 };
 
+// context is a way to share data between components without having to pass props down the component tree
 const CardContext = createContext<CardContextType>({
   lists: [],
   fetchLists: async () => {},
@@ -83,6 +84,7 @@ export function CardProvider({ children }: CardProviderProps) {
   );
 }
 
+// this is a custom hook, the name must start with "use"
 export default function useCards() {
   return useContext(CardContext);
 }

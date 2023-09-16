@@ -16,6 +16,9 @@ import Typography from "@mui/material/Typography";
 import useCards from "@/hooks/useCards";
 import { createCard, deleteCard, updateCard } from "@/utils/client";
 
+// this pattern is called discriminated type unions
+// you can read more about it here: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions
+// or see it in action: https://www.typescriptlang.org/play#example/discriminate-types
 type NewCardDialogProps = {
   variant: "new";
   open: boolean;
@@ -79,6 +82,8 @@ export default function CardDialog(props: CardDialogProps) {
         ) {
           return;
         }
+        // typescript is smart enough to know that if variant is not "new", then it must be "edit"
+        // therefore props.cardId is a valid value
         await updateCard(props.cardId, {
           title: newTitle,
           description: newDescription,
