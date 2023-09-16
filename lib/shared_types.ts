@@ -1,3 +1,14 @@
+// The beauty of using TypeScript on both ends of the application is that we can
+// share types between the client and the server very easily. This is a great way
+// to keep the client and server in sync and avoid bugs. JavaScript makes you move
+// fast, but TypeScript makes you move fast and not break things.
+
+// A "type" can be defined with the `type` keyword or the `interface` keyword.
+// They may seem similar, but there are some differences. For more information,
+// see: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces
+// A general rule of thumb is to always use `type` unless you have a good reason
+// to use `interface`. `interface` is more powerful, at the cost of baring more
+// footguns.
 export type CardData = {
   id: string;
   title: string;
@@ -15,6 +26,10 @@ export type GetCardsResponse = CardData[];
 
 export type GetCardResponse = CardData;
 
+// Types can also be derived from other types using utility types. These are
+// a few examples of utility types:
+// for more information, see: https://www.typescriptlang.org/docs/handbook/utility-types.html
+// You don't need to memorize these, but it's good to know they exist.
 export type CreateCardPayload = Omit<CardData, "id">;
 
 export type CreateCardResponse = Pick<CardData, "id">;
