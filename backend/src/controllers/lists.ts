@@ -105,27 +105,17 @@ export const deleteList = async (
 
   try {
     const { id } = req.params;
-
-    // Delete the list
-    const deletedList = await ListModel.findByIdAndDelete(id);
-
-    // If the list is not found, return 404
+    const deletedList = await ListModel.findByIdAndDelete(id).session(session);
     if (!deletedList) {
-      return res.status(404).json({ error: "id is not valid" });
+      throw new Error("id is not valid");
     }
-
-    // Delete all the cards in the list
-    deletedList.cards.forEach(async (cardId) => {
-      await CardModel.findByIdAndDelete(cardId);
-    });
-
-    // Commit the transaction
+    await CardModel.deleteMany({ list_id: id }).session(session);
     await session.commitTransaction();
-
-    return res.status(200).send("OK");
+    res.status(200).send("OK");
   } catch (error) {
-    // Rollback the transaction
     await session.abortTransaction();
     genericErrorHandler(error, res);
+  } finally {
+    session.endSession();
   }
 };

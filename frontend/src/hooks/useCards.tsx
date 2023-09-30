@@ -63,6 +63,10 @@ export function CardProvider({ children }: CardProviderProps) {
     );
     // or you can do for loops
     for (const card of rawCards) {
+      const list = listMap[card.list_id];
+      if (!list) {
+        continue;
+      }
       listMap[card.list_id].cards.push({
         ...card,
         listId: card.list_id,
