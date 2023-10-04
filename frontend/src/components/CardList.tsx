@@ -25,7 +25,7 @@ export type CardListProps = {
 
 export default function CardList({ id, name, cards }: CardListProps) {
   const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
-  const [edittingName, setEdittingName] = useState(false);
+  const [editingName, setEditingName] = useState(false);
   const { fetchLists } = useCards();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +41,7 @@ export default function CardList({ id, name, cards }: CardListProps) {
         alert("Error: Failed to update list name");
       }
     }
-    setEdittingName(false);
+    setEditingName(false);
   };
 
   const handleDelete = async () => {
@@ -57,7 +57,7 @@ export default function CardList({ id, name, cards }: CardListProps) {
     <>
       <Paper className="w-80 p-6">
         <div className="flex gap-4">
-          {edittingName ? (
+          {editingName ? (
             <ClickAwayListener onClickAway={handleUpdateName}>
               <Input
                 autoFocus
@@ -70,7 +70,7 @@ export default function CardList({ id, name, cards }: CardListProps) {
             </ClickAwayListener>
           ) : (
             <button
-              onClick={() => setEdittingName(true)}
+              onClick={() => setEditingName(true)}
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
               <Typography className="text-start" variant="h4">
