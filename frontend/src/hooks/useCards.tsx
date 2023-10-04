@@ -18,11 +18,14 @@ type CardContextType = {
 };
 
 // context is a way to share data between components without having to pass props down the component tree
+// the default value is only used if the provider is not used
 const CardContext = createContext<CardContextType>({
   lists: [],
   fetchLists: async () => {},
   fetchCards: async () => {},
 });
+// alternatively, you can set the default value to null and throw an error if the provider is not used
+// const CardContext = createContext<CardContextType | null>(null);
 
 type CardProviderProps = {
   children: React.ReactNode;
@@ -90,5 +93,10 @@ export function CardProvider({ children }: CardProviderProps) {
 
 // this is a custom hook, the name must start with "use"
 export default function useCards() {
-  return useContext(CardContext);
+  const context = useContext(CardContext);
+  // uncomment this if you use the null default value
+  // if (!context) {
+  //   throw new Error("useCards must be used within a CardProvider");
+  // }
+  return context;
 }
