@@ -59,11 +59,6 @@ export default function CardDialog(props: CardDialogProps) {
 
   const handleClose = () => {
     onClose();
-    if (variant === "edit") {
-      setNewTitle(title);
-      setNewDescription(description);
-      setNewListId(listId);
-    }
   };
 
   const handleSave = async () => {
