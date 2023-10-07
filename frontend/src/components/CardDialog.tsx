@@ -67,7 +67,7 @@ export default function CardDialog(props: CardDialogProps) {
         await createCard({
           title: newTitle,
           description: newDescription,
-          list_id: listId,
+          list_id: newListId,
         });
       } else {
         if (
