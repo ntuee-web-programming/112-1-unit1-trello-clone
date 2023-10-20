@@ -146,7 +146,9 @@ We want to use the types defined in the `lib` folder. To make our lives easier, 
 {
   "compilerOptions": {
     ...
-    "@lib/*": ["../lib/*"],
+    "paths": {
+      "@lib/*": ["../lib/*"],
+    },
     ...
   }
 }
